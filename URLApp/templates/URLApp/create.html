@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card p-4 shadow-sm">
+                <h2 class="mb-3 text-center">Shorten a URL</h2>
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        {{ form.original_url|add_class:"form-control" }}
+                        <button class="btn btn-primary" type="submit">Shorten</button>
+                    </div>
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.errors.original_url }}
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
