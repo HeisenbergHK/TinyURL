@@ -6,3 +6,7 @@
 __pycache__/
 **/__pycache__/
 *.py[cod]
+
+# Ignore app migrations
+**/migrations/
+!**/migrations/__init__.py
