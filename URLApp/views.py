@@ -38,10 +38,7 @@ def create_short_url(request):
 
 
 def redirect_to_original(request, short_code):
-    print("Redirect view called!")
     url = get_object_or_404(URL, short_code=short_code)
-    print(f"short: {url.short_code}")
     url.click_count += 1
-    print(f"count: {url.click_count}")
     url.save()
     return redirect(url.original_url)
