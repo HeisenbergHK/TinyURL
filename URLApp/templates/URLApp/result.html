@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm p-4">
+        <h2 class="text-center mb-3">Here's your short link</h2>
+        <p>
+          <strong>Original URL:</strong>
+          <span class="text-break">{{ original_url }}</span>
+        </p>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            value="{{ short_url }}"
+            id="short-url"
+            readonly
+          />
+          <button class="btn btn-outline-secondary" onclick="copyToClipboard()">
+            Copy
+          </button>
+        </div>
+        <div class="d-grid">
+          <a href="{% url 'URLApp:create' %}" class="btn btn-primary"
+            >Shorten Another URL</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function copyToClipboard() {
+    const copyText = document.getElementById("short-url");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value).then(() => {
+      alert("Copied to clipboard: " + copyText.value);
+    });
+  }
+</script>
+{% endblock %}
