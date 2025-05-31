@@ -10,3 +10,6 @@ __pycache__/
 # Ignore app migrations
 **/migrations/
 !**/migrations/__init__.py
+
+# Config files for Cloud development
+/AbrArvan
