@@ -1,8 +1,5 @@
 # 🔗 TinyURL – Scalable URL Shortener Service
 
-[![Django CI](https://github.com/hassankalantari/tiny-url/actions/workflows/django.yml/badge.svg)](https://github.com/hassankalantari/tiny-url/actions/workflows/django.yml)
-[![Docker Build](https://github.com/hassankalantari/tiny-url/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/hassankalantari/tiny-url/actions/workflows/docker-publish.yml)
-
 **TinyURL** is a professional-grade URL shortening service built with Django, PostgreSQL, Docker, and Kubernetes. It demonstrates modern backend engineering and DevOps practices, including CI/CD pipelines, container orchestration, and cloud-native architecture.
 
 > ✅ Clean codebase  
@@ -153,7 +150,7 @@ tiny-url/
 └── requirements.txt         # Python dependencies
 ```
 
-###🧪 Running Tests
+### 🧪 Running Tests
 ```bash
 # Local testing
 python manage.py test
