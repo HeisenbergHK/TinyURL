@@ -1,79 +1,173 @@
-# TinyURL - URL Shortener
+# 🔗 TinyURL – Scalable URL Shortener Service
 
-A clean, efficient URL shortening service built with Django, demonstrating modern backend development best practices and cloud-native deployment.
+[![Django CI](https://github.com/hassankalantari/tiny-url/actions/workflows/django.yml/badge.svg)](https://github.com/hassankalantari/tiny-url/actions/workflows/django.yml)
+[![Docker Build](https://github.com/hassankalantari/tiny-url/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/hassankalantari/tiny-url/actions/workflows/docker-publish.yml)
 
-## Features
-- Shorten long URLs into concise, unique links
-- Redirect users seamlessly to the original URLs
-- Follows Angular commit message conventions for clear history
-- Fully Dockerized for environment consistency
-- Orchestrated with Kubernetes on Minikube for local testing
-- Cloud deployment ready with scalable design
+**TinyURL** is a professional-grade URL shortening service built with Django, PostgreSQL, Docker, and Kubernetes. It demonstrates modern backend engineering and DevOps practices, including CI/CD pipelines, container orchestration, and cloud-native architecture.
 
-## Tech Stack
-- __Backend:__ Python 3, Django
-- __Database:__ PostgreSQL (configurable)
-- __Containerization:__ Docker
-- __Orchestration:__ Kubernetes (Minikube)
-- __Version Control:__ Git with Angular commit messages
+> ✅ Clean codebase  
+> ✅ Production-ready Docker setup  
+> ✅ Kubernetes manifests included  
+> ✅ GitHub Actions CI/CD pipeline  
 
-## Local Development Setup
-```
+---
+
+## 🚀 Key Features
+
+- 🔗 Shorten long URLs into concise, shareable links
+- 📱 Mobile-friendly, responsive UI
+- 🐳 Multi-environment support: Local, Docker, Kubernetes
+- ☁️ Cloud-native configuration and secret management
+- 🔄 Fully integrated CI/CD pipeline with GitHub Actions
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer         | Tools                          |
+|---------------|--------------------------------|
+| Backend       | Python 3.11, Django             |
+| Database      | PostgreSQL 15                  |
+| Web Server    | Gunicorn                        |
+| Containerization | Docker                      |
+| Orchestration | Kubernetes (Minikube)          |
+| CI/CD         | GitHub Actions                 |
+
+---
+
+## 🏗️ Architecture Overview
+
+The app follows a clean microservice-style separation:
+
+- **Django** – Handles all business logic and routing
+- **PostgreSQL** – Stores all URL mappings securely
+- **Docker & Kubernetes** – Enables portability, scalability, and infrastructure as code
+- **Environment Config** – .env files, secrets, and ConfigMaps for each environment
+
+---
+
+## 🚀 Deployment Options
+
+### 1️⃣ Local Development
+
+```bash
 # Clone the repo
-git clone https://github.com/yourgithubusername/tinyurl.git
-cd tinyurl
+git clone https://github.com/hassankalantari/tiny-url.git
+cd tiny-url
 
-# Create virtual environment (optional)
+# Set up virtual environment
 python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Set up environment variables
-touch .env
-# Edit .env with your database credentials and secret keys
+# Create environment file
+cat > .env << EOL
+POSTGRES_DB=tinyurl
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+SECRET_KEY=your_secret_key_here
+DEBUG=True
+EOL
 
-# Run migrations
+# Run migrations and start server
 python manage.py migrate
-
-# Run development server
 python manage.py runserver
 ```
 
-## Docker
-### Build Docker Image
-```
-docker build -t yourdockerhubusername/tinyurl:latest .
+### 2️⃣ Docker Compose
+```bash
+# Clone the repo
+git clone https://github.com/hassankalantari/tiny-url.git
+cd tiny-url
+
+# Create environment file
+cat > .env << EOL
+POSTGRES_DB=tinyurl
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+SECRET_KEY=your_secret_key_here
+DEBUG=False
+EOL
+
+# Start services
+docker-compose up -d
+
+# Access at http://localhost:8000
 ```
 
-### Run Docker Container
-```
-docker run -d -p 8000:8000 --env-file .env hassankalantari/tinyurl:latest
-```
-
-## Kubernetes (Minikube)
-
-### Start Minikube
-```
+### 3️⃣ Kubernetes (Minikube)
+```bash
+# Start Minikube
 minikube start
-```
-### Deploy App
-```
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-```
-### Access App
-```
-minikube service tinyurl-service
+
+# Apply namespace and configs
+kubectl apply -f K8s/namespace.yaml
+kubectl apply -f K8s/ConfigMap.yml
+kubectl apply -f K8s/django-secrets.yml
+kubectl apply -f K8s/postgresql-secrets.yaml
+
+# Deploy PostgreSQL
+kubectl apply -f K8s/postgresql-pvc.yaml
+kubectl apply -f K8s/postgresql-deployment.yaml
+kubectl apply -f K8s/postgresql-service.yaml
+
+# Deploy Django app
+kubectl apply -f K8s/django-deployment.yaml
+kubectl apply -f K8s/django-service.yaml
+kubectl apply -f K8s/django-ingress.yaml
+
+# Access the app
+minikube service django-service -n tiny-url-namespace
 ```
 
-## Commit Message Guidelines
-This project follows the [Angular Commit Message Conventions](https://www.conventionalcommits.org/en/v1.0.0/) for clear and consistent commit history, e.g.:
+## 🔄 CI/CD with GitHub Actions
+This project includes two automated workflows:
+
+### ✅ Continuous Integration
+Triggered on push and pull requests:
+- Set up Python and PostgreSQL
+- Run Django unit tests
+- Validate Gunicorn setup
+
+### 🚀 Continuous Deployment
+
+Triggered on Git tags (v*.*.*):
+- Build Docker image
+- Push to Docker Hub with latest and version tags
+
+## 📁 Project Structure
 ```
-feat: add URL shortening endpoint
-fix: correct redirect logic for empty URLs
-chore: update Dockerfile to use Python 3.10
+tiny-url/
+├── .github/workflows/       # CI/CD pipelines
+├── K8s/                     # Kubernetes manifests
+├── TinyURL/                 # Django project config
+├── URLApp/                  # App logic and views
+├── docker-compose.yml       # Docker Compose config
+├── Dockerfile               # Docker image definition
+└── requirements.txt         # Python dependencies
 ```
 
+###🧪 Running Tests
+```bash
+# Local testing
+python manage.py test
+
+# Docker Compose
+docker-compose run web python manage.py test
+```
+
+## 🤝 Contributing
+Contributions are welcome!
+1.	Fork the repo
+2.	Create your feature branch: git checkout -b feature/amazing-feature
+3.	Commit with Conventional Commits
+4.	Push your branch: git push origin feature/amazing-feature
+5.	Open a Pull Request 🚀
+---
+#### Built with ❤️ by [Hassan Kalantari](https://github.com/hassankalantari)
