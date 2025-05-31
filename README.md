@@ -27,7 +27,7 @@
 | Database      | PostgreSQL 15                  |
 | Web Server    | Gunicorn                        |
 | Containerization | Docker                      |
-| Orchestration | Kubernetes (Minikube)          |
+| Orchestration | Kubernetes (Minikube, ArvanCloud) |
 | CI/CD         | GitHub Actions                 |
 
 ---
@@ -44,6 +44,14 @@ The app follows a clean microservice-style separation:
 ---
 
 ## 🚀 Deployment Options
+
+### ☁️ Live Deployment
+
+The application is currently deployed on ArvanCloud and accessible at:
+
+**[http://185.228.236.77:8000/](http://185.228.236.77:8000/)**
+
+Feel free to try out the URL shortening service on this live instance!
 
 ### 1️⃣ Local Development
 
@@ -114,6 +122,9 @@ kubectl apply -f K8s/postgresql-pvc.yaml
 kubectl apply -f K8s/postgresql-deployment.yaml
 kubectl apply -f K8s/postgresql-service.yaml
 
+# Run database migrations
+kubectl apply -f K8s/django-migrations-job.yaml
+
 # Deploy Django app
 kubectl apply -f K8s/django-deployment.yaml
 kubectl apply -f K8s/django-service.yaml
@@ -142,7 +153,7 @@ Triggered on Git tags (v*.*.*):
 ```
 tiny-url/
 ├── .github/workflows/       # CI/CD pipelines
-├── K8s/                     # Kubernetes manifests
+├── K8s/                     # Local Kubernetes manifests
 ├── TinyURL/                 # Django project config
 ├── URLApp/                  # App logic and views
 ├── docker-compose.yml       # Docker Compose config
