@@ -17,7 +17,6 @@ jobs:
           POSTGRES_DB: testdb
           POSTGRES_USER: testuser
           POSTGRES_PASSWORD: testpass
-          DJANGO_ALLOWED_HOSTS: "0.0.0.0,127.0.0.1,localhost"
         ports:
           - 5432:5432
         options: >-
@@ -33,6 +32,7 @@ jobs:
       DB_HOST: localhost
       DB_PORT: 5432
       SECRET_KEY: dummysecret
+      DJANGO_ALLOWED_HOSTS: "0.0.0.0,127.0.0.1,localhost"
       DEBUG: "True"
 
     strategy:
