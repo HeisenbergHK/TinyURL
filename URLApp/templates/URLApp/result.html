@@ -35,9 +35,23 @@
     const copyText = document.getElementById("short-url");
     copyText.select();
     copyText.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(copyText.value).then(() => {
+    
+    try {
+      // Try the modern clipboard API first
+      navigator.clipboard.writeText(copyText.value)
+        .then(() => {
+          alert("Copied to clipboard: " + copyText.value);
+        })
+        .catch(err => {
+          // Fallback for browsers that don't support clipboard API
+          document.execCommand('copy');
+          alert("Copied to clipboard: " + copyText.value);
+        });
+    } catch (err) {
+      // Final fallback
+      document.execCommand('copy');
       alert("Copied to clipboard: " + copyText.value);
-    });
+    }
   }
 </script>
 {% endblock %}

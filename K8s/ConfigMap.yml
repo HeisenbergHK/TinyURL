@@ -11,3 +11,7 @@ data:
   GUNICORN_TIMEOUT: "120"
   GUNICORN_WORKERS: "3"
   GUNICORN_WORKER_CLASS: "sync"
+  CSP_DEFAULT_SRC: "'self'"
+  CSP_SCRIPT_SRC: "'self' 'unsafe-inline'"
+  CSP_STYLE_SRC: "'self' 'unsafe-inline'"
+  CSP_CONNECT_SRC: "'self'"
