@@ -49,7 +49,6 @@ INSTALLED_APPS = [
 
     # Third party app
     'widget_tweaks',
-    'django_csp',
 ]
 
 MIDDLEWARE = [
@@ -61,14 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django_csp.middleware.CSPMiddleware',
 ]
-
-# Content Security Policy settings
-CSP_DEFAULT_SRC = (os.getenv('CSP_DEFAULT_SRC', "'self'"),)
-CSP_SCRIPT_SRC = (os.getenv('CSP_SCRIPT_SRC', "'self' 'unsafe-inline'"),)
-CSP_STYLE_SRC = (os.getenv('CSP_STYLE_SRC', "'self' 'unsafe-inline'"),)
-CSP_CONNECT_SRC = (os.getenv('CSP_CONNECT_SRC', "'self'"),)
 
 ROOT_URLCONF = 'TinyURL.urls'
 
