@@ -15,4 +15,15 @@ COPY . .
 
 EXPOSE 8000
 
-CMD [ "gunicorn", "TinyURL.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Use environment variables for Gunicorn configuration with defaults
+ENV GUNICORN_TIMEOUT=120
+ENV GUNICORN_WORKERS=3
+ENV GUNICORN_WORKER_CLASS=sync
+
+CMD gunicorn TinyURL.wsgi:application --bind 0.0.0.0:8000 \
+    --timeout ${GUNICORN_TIMEOUT} \
+    --workers ${GUNICORN_WORKERS} \
+    --worker-class ${GUNICORN_WORKER_CLASS} \
+    --log-level info \
+    --access-logfile - \
+    --error-logfile -

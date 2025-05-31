@@ -1,27 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: django-app
+  name: django-migrations
   namespace: tiny-url-namespace
 spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: django-app
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
   template:
-    metadata:
-      labels:
-        app: django-app
     spec:
       containers:
-      - name: django-app
+      - name: django-migrations
         image: hassankalantari/tiny-url-django:latest
-        ports:
-        - containerPort: 8000
+        command: ["/bin/sh", "-c", "python manage.py makemigrations URLApp && python manage.py migrate"]
         env:
         - name: DEBUG
           valueFrom:
@@ -68,13 +56,5 @@ spec:
             secretKeyRef:
               name: django-secrets
               key: DATABASE_URL
-        readinessProbe:
-          tcpSocket:
-            port: 8000
-          initialDelaySeconds: 10
-          periodSeconds: 5
-        livenessProbe:
-          tcpSocket:
-            port: 8000
-          initialDelaySeconds: 30
-          periodSeconds: 10
+      restartPolicy: Never
+  backoffLimit: 5
