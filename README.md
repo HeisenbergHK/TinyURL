@@ -49,6 +49,8 @@ The app follows a clean microservice-style separation:
 
 The application is currently deployed on ArvanCloud and accessible at:
 
+(Currently down due to financial problems)
+
 **[http://185.228.236.77:8000/](http://185.228.236.77:8000/)**
 
 Feel free to try out the URL shortening service on this live instance!
